@@ -1,157 +1,134 @@
-# 🧠 Introduction to Convolutional Neural Networks (CNNs)
+# Convolutional Neural Networks
+
 **Author:** Miguel Carrasco Belmar  
-**Course:** Data Science Programming Assignment  
 **Institution:** Boise State University  
+**Course:** Data Science Programming Assignment  
 
 ---
 
-## 📘 Overview
+## Abstract
 
-Convolutional Neural Networks (CNNs) are a powerful class of deep learning architectures that have revolutionized the field of **computer vision**.  
-Unlike traditional machine learning models, which rely heavily on handcrafted features, CNNs **learn directly from data** by automatically detecting and combining hierarchical visual patterns.
-
-This project introduces CNNs through both **conceptual explanation** and **practical experimentation**.  
-It combines a detailed blog-style discussion of how CNNs work with a full **Python implementation** using **TensorFlow/Keras**, applied to the **MNIST handwritten digits dataset**.  
-The notebook includes detailed visualizations showing how each layer transforms images, from raw pixels to feature maps to predictions.
+This project introduces the structure and function of **Convolutional Neural Networks (CNNs)**, a class of deep learning architectures that have become fundamental in modern computer vision.  
+The notebook accompanying this report provides a complete demonstration of CNN principles — beginning with the visualization of convolution, activation, and pooling operations on a sample image — and culminates with the implementation and training of a CNN model on the **MNIST handwritten digits dataset**.  
+Through theory, experimentation, and quantitative evaluation, this project illustrates how CNNs transform raw pixel data into hierarchical feature representations and achieve high classification accuracy on real-world visual tasks.
 
 ---
 
-## 🧩 Why This Project Matters
+## 1. Introduction
 
-The ability of CNNs to understand images without manual feature design is what powers modern AI technologies, including:
+Artificial Neural Networks (ANNs) are computational systems inspired by the human brain’s structure, where interconnected neurons process data collectively to recognize patterns.  
+A **Convolutional Neural Network (CNN)** is a specialized form of ANN designed to handle **spatial data**, such as images, where local patterns and pixel arrangements carry meaning.
 
-- 👁️ **Facial recognition** systems (Face ID, surveillance)  
-- 🚗 **Autonomous driving** (object detection, lane tracking)  
-- 🏥 **Medical imaging** (tumor detection, X-ray classification)  
-- 📱 **Smartphones and social media** (photo tagging, filters)  
-- 🛰️ **Remote sensing** (satellite and aerial image analysis)  
+CNNs are now used extensively in:
+- **Facial recognition and biometrics**
+- **Autonomous vehicle perception**
+- **Medical image analysis**
+- **Handwriting and character recognition**
 
-Understanding CNNs is therefore fundamental to becoming an effective data scientist or AI researcher.  
-This project demonstrates both *how* CNNs function and *why* they are so effective in analyzing visual data.
-
----
-
-## 🧠 Historical Background
-
-Before CNNs, image recognition tasks relied on manual feature extraction methods such as **SIFT (Scale-Invariant Feature Transform)** and **HOG (Histogram of Oriented Gradients)**.  
-While effective in some cases, these methods required human expertise and could not generalize well.
-
-In 1998, **Yann LeCun** introduced **LeNet-5**, one of the first convolutional neural networks, to recognize handwritten digits.  
-Two decades later, CNNs like **AlexNet (2012)**, **VGGNet (2014)**, and **ResNet (2015)** achieved breakthroughs on large-scale datasets such as **ImageNet**, marking the beginning of the deep learning era.
-
-This project revisits that legacy by implementing a modernized version of LeNet for the MNIST dataset.
+The goal of this project is twofold:
+1. To illustrate, in a visual and computational way, how CNN layers (convolution, activation, and pooling) extract hierarchical features from images.  
+2. To implement and evaluate a complete CNN model capable of classifying handwritten digits using the MNIST dataset with high accuracy.
 
 ---
 
-## 🔢 Mathematical Foundations
+## 2. Background: Neural Networks
 
-### 1. Convolution Operation
+A neural network learns by adjusting the strength of connections (weights) between its neurons in order to minimize prediction error.  
+Each neuron performs a linear combination of its inputs followed by a **non-linear activation function**, which enables the network to approximate complex mappings.
 
-At the core of CNNs lies the **convolution operation**, which captures local dependencies in data.  
-For an image \( I \) and a kernel \( K \):
+A typical feed-forward neural network consists of:
+- **Input Layer:** Accepts raw data (e.g., image pixels or numeric features).  
+- **Hidden Layers:** Perform transformations to extract intermediate patterns.  
+- **Output Layer:** Produces final predictions (e.g., categorical labels).
 
-\[
-S(i, j) = (I * K)(i, j) = \sum_m \sum_n I(m, n) \cdot K(i - m, j - n)
-\]
-
-This operation slides a small filter \( K \) across the image \( I \), producing a **feature map** \( S \).  
-Each filter extracts a specific pattern — for example, a vertical edge or a diagonal line.  
-During training, CNNs learn optimal filter values that best represent meaningful patterns in the data.
+However, dense networks ignore spatial relationships between pixels, which makes them inefficient for image analysis.  
+CNNs address this limitation through **local connectivity**, **weight sharing**, and **hierarchical feature extraction**.
 
 ---
 
-### 2. Activation Functions
+## 3. Convolutional Neural Networks: Structure and Function
 
-After convolution, CNNs apply a **non-linear activation function** to model complex relationships.  
-The most common is the **Rectified Linear Unit (ReLU)**:
+CNNs are designed to automatically identify spatial hierarchies in image data.  
+They process local image patches using small learnable filters, then progressively combine these local features into complex global structures.
 
-\[
-f(x) = \max(0, x)
-\]
+The architecture consists of the following key components:
 
-This operation removes negative activations and keeps only the strongest responses, helping the network converge faster and avoid the vanishing gradient problem.
+1. **Input Layer**  
+   Receives image data as a 3D tensor (height × width × channels).  
+   No computation occurs at this stage; the pixel values are simply passed to subsequent layers.
 
----
+2. **Convolutional Layer**  
+   The core component of the network.  
+   Small filters (kernels) convolve across the input image to detect local features such as edges or corners.  
+   Each kernel generates a feature map that records the spatial locations where that feature appears.  
+   As more convolutional layers are added, the network learns increasingly abstract features — progressing from edges to textures, shapes, and object parts.
 
-### 3. Pooling Operation
+3. **Activation Layer**  
+   Introduces non-linearity to the model, enabling it to learn complex relationships.  
+   The **Rectified Linear Unit (ReLU)** is used in this project, defined as  
+   \[
+   f(x) = \max(0, x)
+   \]  
+   It accelerates convergence and mitigates vanishing gradients during training.
 
-Pooling reduces the dimensionality of feature maps while preserving the most important information.  
-**Max pooling** takes the maximum value within each window:
+4. **Pooling Layer**  
+   Reduces the spatial dimensions of feature maps while preserving the most informative activations.  
+   **Max Pooling** is employed to select the maximum value within a region (e.g., 2×2).  
+   This improves computational efficiency and provides translational invariance.
 
-\[
-P(i, j) = \max_{(m, n) \in R(i, j)} S(m, n)
-\]
+5. **Fully Connected (Dense) Layers**  
+   After several convolution and pooling stages, the resulting features are flattened and passed through dense layers.  
+   These layers integrate the learned representations to perform classification.
 
-This process introduces **spatial invariance**, meaning that slight shifts or rotations in the image won’t affect recognition.
-
----
-
-### 4. Fully Connected Layers and Softmax
-
-After multiple rounds of convolution and pooling, the feature maps are flattened into a vector and fed into **fully connected layers**, which act as a traditional neural network.  
-The final layer uses the **Softmax** function to output probabilities:
-
-\[
-\sigma(z_i) = \frac{e^{z_i}}{\sum_{j=1}^{K} e^{z_j}}
-\]
-
-Where \( K \) is the number of classes (in MNIST, 10 digits).  
-This ensures all outputs sum to 1, representing class probabilities.
-
----
-
-## 🧩 Layer-by-Layer Walkthrough
-
-A CNN processes images hierarchically.  
-Below is the typical structure:
-
-| Layer | Function | Description |
-|--------|-----------|-------------|
-| **Input Layer** | Accepts image input | Usually of shape (height, width, channels) |
-| **Convolutional Layer** | Detects local patterns | Applies filters that identify edges, textures, or shapes |
-| **Activation Layer (ReLU)** | Adds non-linearity | Ensures network can model complex functions |
-| **Pooling Layer (MaxPooling)** | Reduces size | Summarizes strong activations and prevents overfitting |
-| **Flatten Layer** | Converts 2D to 1D | Prepares data for fully connected layers |
-| **Dense (Fully Connected) Layer** | Combines features | Learns global associations for classification |
-| **Output Layer (Softmax)** | Predicts classes | Produces final probabilities for each category |
+6. **Output Layer**  
+   The final layer uses the **Softmax** activation function to produce a probability distribution across classes.  
+   For MNIST, this corresponds to ten categories representing digits 0–9.
 
 ---
 
-## 🧮 Example: Visualizing CNN Operations on an Image
+## 4. Layer Demonstration: Convolution, Activation, and Pooling
 
-Before training on MNIST, it is instructive to visualize how convolution, activation, and pooling affect an image.  
-We use a simple **edge detection kernel** to illustrate how CNNs extract visual features.
+To visualize how CNN operations transform image data, a single grayscale image (“Ganesh.jpg”) was processed using TensorFlow.  
+The following sequence of operations was performed:
+
+1. **Convolution:**  
+   A 3×3 edge-detection kernel was applied, producing a feature map highlighting intensity changes.  
+   Bright regions corresponded to strong edges and contours.
+
+2. **Activation (ReLU):**  
+   Negative values in the convolved image were replaced with zeros, retaining only strong positive responses.
+
+3. **Pooling (Max Pooling):**  
+   The activated feature map was downsampled to reduce size while preserving dominant visual features.
+
+The resulting progression — from raw image → convolution → activation → pooling — visually demonstrates how CNNs extract and condense visual information.  
+Edges and outlines become clearer, and redundant pixel details are suppressed.
+
+---
+
+## 5. CNN Implementation on MNIST Dataset
+
+The **MNIST dataset** consists of 70,000 grayscale images (60,000 for training and 10,000 for testing), each depicting a handwritten digit from 0 to 9 at 28×28 pixels resolution.  
+The dataset serves as a standard benchmark for image classification algorithms.
+
+### 5.1 Data Preparation
+- The data was loaded via `tensorflow.keras.datasets.mnist`.  
+- Input images were normalized to the [0,1] range.  
+- Data was reshaped into 4-D tensors `(samples, height, width, channels)`.  
+- Labels were one-hot encoded for multi-class classification.
+
+### 5.2 Model Architecture
+
+The following architecture was implemented using Keras:
 
 ```python
-import numpy as np
-import tensorflow as tf
-import matplotlib.pyplot as plt
-
-plt.rc('figure', autolayout=True)
-plt.rc('image', cmap='magma')
-
-kernel = tf.constant([
-    [-1, -1, -1],
-    [-1,  8, -1],
-    [-1, -1, -1],
+model = Sequential([
+    Conv2D(32, (3, 3), activation='relu', input_shape=(28, 28, 1)),
+    MaxPooling2D((2, 2)),
+    Conv2D(64, (3, 3), activation='relu'),
+    MaxPooling2D((2, 2)),
+    Flatten(),
+    Dense(128, activation='relu'),
+    Dropout(0.5),
+    Dense(10, activation='softmax')
 ])
-
-image = tf.io.read_file('Ganesh.jpg')
-image = tf.io.decode_jpeg(image, channels=1)
-image = tf.image.resize(image, size=[300, 300])
-
-image = tf.image.convert_image_dtype(image, dtype=tf.float32)
-image = tf.expand_dims(image, axis=0)
-kernel = tf.reshape(kernel, [3, 3, 1, 1])
-
-conv = tf.nn.conv2d(image, kernel, strides=1, padding='SAME')
-relu = tf.nn.relu(conv)
-pooled = tf.nn.pool(relu, window_shape=(2, 2), pooling_type='MAX', strides=(2, 2), padding='SAME')
-
-plt.figure(figsize=(15, 5))
-for i, stage in enumerate([conv, relu, pooled]):
-    plt.subplot(1, 3, i + 1)
-    plt.imshow(tf.squeeze(stage))
-    plt.axis('off')
-    plt.title(['Convolution', 'Activation (ReLU)', 'Pooling'][i])
-plt.show()

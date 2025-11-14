@@ -16,6 +16,9 @@ Once trained, the network can recognize patterns in data and make predictions in
 ## How do Neural Networks work?
 Artificial neural networks are designed to emulate the way biological neurons transmit and process signals.
 They are composed of distinct layers, each performing a specific function in the learning process:
+<p align="center">
+  <img src="/images/layers.png" alt="layers" width="600">
+</p>
 
 **Input Layer:**
 This layer receives raw data from the external environment. Each input node corresponds to one feature of the dataset (for example, pixel intensity in an image). The input layer transmits this information to subsequent layers without modification.
@@ -32,6 +35,10 @@ Depending on how data propagates through the layers, neural networks can assume 
 
 ## What Are Convolutional Neural Networks (CNNs)
 Convolutional Neural Networks (CNNs) are a specialized class of neural networks primarily designed to process and extract meaningful features from grid-like data structures, such as images or videos. In visual data, spatial patterns, for example, edges, textures, and shapes, play a crucial role in understanding the content. CNNs are particularly effective in capturing these spatial hierarchies, which makes them the foundation of most computer vision applications today.
+
+<p align="center">
+  <img src="/images/cnns.PNG" alt="CNN feature banner">
+</p>
 
 A CNN is formed by multiple layers that work together to transform raw pixel data into abstract, high-level representations. The key layers that define the architecture of a CNN are:
 

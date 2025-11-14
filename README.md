@@ -1,6 +1,7 @@
 # Convolutional Neural Networks
 
 **Author:** Miguel Carrasco Belmar  
+<br>
 Have you ever counted how many times you pick up your phone each day? It’s estimated that an average person unlocks their phone 110 to 150 times per day. Each time you unlock your phone using Face ID or facial recognition, you’re actually using a Convolutional Neural Network, over 100 times a day! Convolutional Neural Networks (CNNs) are a type of neural network widely used in Artificial Intelligence (AI), especially in computer vision tasks such as image classification, object detection, and image segmentation.
 <p align="center">
   <img src="/images/banner.png" alt="CNN feature banner">
@@ -59,18 +60,21 @@ A CNN is formed by multiple layers that work together to transform raw pixel dat
 **6.- Output Layer:** This is the final layer of the CNN that produces the prediction. For instance, in a multi-class classification task, the Softmax activation function is commonly used to convert the output into a probability distribution across all possible categories (e.g., cat = 0.85, dog = 0.10, car = 0.05).
 
 ## Experimental Implementation: CNN Model for Handwritten Digit Recognition Using the MNIST Dataset
-To demonstrate how Convolutional Neural Networks operate in practice, we implemented a simple CNN model using the MNIST handwritten digits dataset.
-The goal is to be able to recognize Handwritten Digits. 
+To demonstrate how Convolutional Neural Networks operate in practice, we implemented a simple CNN model using the MNIST handwritten digits dataset. 
+We used Keras, a high-level deep learning library in Python (via `tensorflow.keras`), to build and train the model.  
+The goal of this experiment is to recognize handwritten digits automatically from image data.
 
+
+### **MNIST**
 The dataset, MNIST, consists of  70,000 grayscale images of handwritten digits, with 60,000 for training and 10,000 for testing, each 28 × 28 pixels.
 Reshaping, the images were reshaped to 4D tensors with shape (samples, 28, 28, 1) to fit the Keras CNN layers, and normalized from [0, 255] to [0, 1], which helps gradients behave better during training. Labels were converted to one hot encoding so the network can output a probability for each digit. Here is a visualization of the training data set
 <p align="center">
   <img src="/images/dataset_preview.PNG" alt="dataset_preview">
 </p>
 
-**CNN Architecture**
+### **CNN Architecture**
+Then we built our Convolutional Neural Network. For a small project like this, we can achieve good results with a small model with the following structure: 
 <br>
-Then we built our Convolutional Neural Network. For a small project like this, we can achieve good results with a small model with the following structure: <br>
 **Two convolution–pooling blocks**
 The first block uses a 3×3 convolution with 32 filters followed by 2×2 max pooling, and the second block uses a 3×3 convolution with 64 filters followed by another 2×2 max pooling.
 Together, these layers detect simple local patterns (edges, strokes, and corners) in the early layers and more complex combinations of strokes (loops and intersections) in the deeper layers.
@@ -85,16 +89,34 @@ A dropout layer with a rate of 0.5 randomly “turns off” half of the neurons 
 The final dense layer has 10 neurons with Softmax activation, producing a probability distribution over the 10 digit classes (0–9).
 
 
-Training Setup
+### **Training Setup**
 
-The model was trained using:
+The model was trained using the following setup:
 
-Optimizer: Adam, which adapts the learning rate during training.
+**Optimizer:** Adam, which adapts the learning rate during training.
 
-Loss function: Categorical cross-entropy, appropriate for multi-class classification with one-hot labels.
+**Loss function:** Categorical cross-entropy, appropriate for multi-class classification with one-hot labels.
 
-Metrics: Accuracy on both the training and validation sets.
+**Metrics:** Accuracy on both the training and validation sets.
 
-Training configuration: 5 epochs, batch size of 128, with 10% of the training data held out as a validation set.
+**Training configuration:** 5 epochs, batch size of 128, with 10% of the training data held out as a validation set.
 
-During training, the model gradually adjusts its weights so that the predicted probabilities align more closely with the true digit labels.
+After training, we calculated the model's accuracy and loss and displayed it
+<p align="center">
+  <img src="/images/curves.PNG" alt="curves">
+</p>
+
+And we tested our model
+```python
+test_loss, test_acc = model.evaluate(x_test, y_test, verbose=0)
+print(f'Test Accuracy: {test_acc * 100:.2f}%')
+```
+We obtained an excellent score of 99.07% Test Accuracy.
+Finally, we made predictions and plotted our confusion matrix
+<p align="center">
+  <img src="/images/confusion_matrix.PNG" alt="conf_matrix">
+</p>
+and just like tha, we successfully built a Convolutional Neural Network with 99.07% Accuracy! Here is a visual of some of the predictions
+<p align="center">
+  <img src="/images/output.PNG" alt="conf_matrix">
+</p>

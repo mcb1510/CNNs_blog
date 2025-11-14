@@ -47,3 +47,6 @@ A CNN is formed by multiple layers that work together to transform raw pixel dat
 
 
 **6.- Output Layer:** This is the final layer of the CNN that produces the prediction. For instance, in a multi-class classification task, the Softmax activation function is commonly used to convert the output into a probability distribution across all possible categories (e.g., cat = 0.85, dog = 0.10, car = 0.05).
+
+## Experimental Implementation: CNN Model for Handwritten Digit Recognition Using the MNIST Dataset
+To demonstrate how Convolutional Neural Networks operate in practice, we implemented a simple CNN model using the MNIST handwritten digits dataset.

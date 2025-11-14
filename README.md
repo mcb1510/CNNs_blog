@@ -3,7 +3,7 @@
 **Author:** Miguel Carrasco Belmar  
 Have you ever counted how many times you pick up your phone each day? It’s estimated that an average person unlocks their phone 110 to 150 times per day. Each time you unlock your phone using Face ID or facial recognition, you’re actually using a Convolutional Neural Network, over 100 times a day! Convolutional Neural Networks (CNNs) are a type of neural network widely used in Artificial Intelligence (AI), especially in computer vision tasks such as image classification, object detection, and image segmentation.
 <p align="center">
-  <img src="/images/banner.png" alt="CNN feature banner" width="400">
+  <img src="/images/banner.png" alt="CNN feature banner">
 </p>
 
 ## Background: What are Neural Networks

@@ -37,7 +37,7 @@ Depending on how data propagates through the layers, neural networks can assume 
 Convolutional Neural Networks (CNNs) are a specialized class of neural networks primarily designed to process and extract meaningful features from grid-like data structures, such as images or videos. In visual data, spatial patterns, for example, edges, textures, and shapes, play a crucial role in understanding the content. CNNs are particularly effective in capturing these spatial hierarchies, which makes them the foundation of most computer vision applications today.
 
 <p align="center">
-  <img src="/images/cnns.PNG" alt="CNN feature banner">
+  <img src="/images/cnns.PNG" alt="cnns">
 </p>
 
 A CNN is formed by multiple layers that work together to transform raw pixel data into abstract, high-level representations. The key layers that define the architecture of a CNN are:
@@ -60,3 +60,41 @@ A CNN is formed by multiple layers that work together to transform raw pixel dat
 
 ## Experimental Implementation: CNN Model for Handwritten Digit Recognition Using the MNIST Dataset
 To demonstrate how Convolutional Neural Networks operate in practice, we implemented a simple CNN model using the MNIST handwritten digits dataset.
+The goal is to be able to recognize Handwritten Digits. 
+
+The dataset, MNIST, consists of  70,000 grayscale images of handwritten digits, with 60,000 for training and 10,000 for testing, each 28 × 28 pixels.
+Reshaping, the images were reshaped to 4D tensors with shape (samples, 28, 28, 1) to fit the Keras CNN layers, and normalized from [0, 255] to [0, 1], which helps gradients behave better during training. Labels were converted to one hot encoding so the network can output a probability for each digit. Here is a visualization of the training data set
+<p align="center">
+  <img src="/images/dataset_preview.PNG" alt="dataset_preview">
+</p>
+
+**CNN Architecture**
+<br>
+Then we built our Convolutional Neural Network. For a small project like this, we can achieve good results with a small model with the following structure: <br>
+**Two convolution–pooling blocks**
+The first block uses a 3×3 convolution with 32 filters followed by 2×2 max pooling, and the second block uses a 3×3 convolution with 64 filters followed by another 2×2 max pooling.
+Together, these layers detect simple local patterns (edges, strokes, and corners) in the early layers and more complex combinations of strokes (loops and intersections) in the deeper layers.
+
+**Flatten and dense layer**
+The resulting feature maps are flattened into a 1D vector and passed to a dense layer with 128 neurons and ReLU activation. This layer combines the learned features into a compact representation useful for classification.
+
+**Dropout for regularization**
+A dropout layer with a rate of 0.5 randomly “turns off” half of the neurons during training. This helps prevent overfitting (model memorizing the training data) by forcing the network to rely on multiple features rather than memorizing specific patterns.
+
+**Output layer with Softmax**
+The final dense layer has 10 neurons with Softmax activation, producing a probability distribution over the 10 digit classes (0–9).
+
+
+Training Setup
+
+The model was trained using:
+
+Optimizer: Adam, which adapts the learning rate during training.
+
+Loss function: Categorical cross-entropy, appropriate for multi-class classification with one-hot labels.
+
+Metrics: Accuracy on both the training and validation sets.
+
+Training configuration: 5 epochs, batch size of 128, with 10% of the training data held out as a validation set.
+
+During training, the model gradually adjusts its weights so that the predicted probabilities align more closely with the true digit labels.

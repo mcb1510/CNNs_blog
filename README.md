@@ -98,8 +98,8 @@ Reshaping, the images were reshaped to 4D tensors with shape (samples, 28, 28, 1
 
 ### **CNN Architecture**
 Then we built our Convolutional Neural Network. For a small project like this, we can achieve good results with a compact model with the following structure: 
-
 <br>
+
 **Two convolution–pooling blocks**
 The first block uses a 3×3 convolution with 32 filters followed by 2×2 max pooling, and the second block uses a 3×3 convolution with 64 filters followed by another 2×2 max pooling.
 Together, these layers detect simple local patterns (edges, strokes, and corners) in the early layers and more complex combinations of strokes (loops and intersections) in the deeper layers.
@@ -166,4 +166,6 @@ In total, the model correctly predicts 9,907 out of 10,000 test images, which co
 
 ### Conclusion
 
-This project showed how Convolutional Neural Networks turn raw pixels into useful predictions, starting from simple operations like convolution, ReLU, and pooling, and ending with a full model that can recognize handwritten digits. After preprocessing the data and building a small but effective architecture, the model reached high accuracy on unseen test images, proving that these learned features are truly useful, not just memorized patterns. At the same time, the experiment highlighted that MNIST is a relatively simple problem, and that more complex, real world tasks would require deeper models, more data, and additional techniques. Overall, the project not only explains what CNNs are, it also demonstrates how data preprocessing, model design, and visualization come together in a real data science workflow, from understanding the method to evaluating its strengths and limitations.
+Convolutional Neural Networks build on the core ideas of artificial neural networks by introducing operations that are specifically designed for image data. While standard neural networks learn patterns through fully connected layers, CNNs use convolution, activation, and pooling to detect edges, textures, and shapes in a structured, spatial way. These layers create a hierarchy of features that becomes more abstract and meaningful as the image moves deeper into the network.
+
+The performance on MNIST shows how these theoretical concepts work in practice. Once the images are normalized and organized correctly, even a relatively small CNN can learn the essential visual patterns that define handwritten digits. The high accuracy achieved on unseen data reflects how effectively CNNs extract and combine features, rather than memorizing examples. Although MNIST is a simple dataset, the same mechanisms allow CNNs to handle far more complex visual tasks, which is why they play such a central role in modern computer vision.

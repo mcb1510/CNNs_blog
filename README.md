@@ -45,7 +45,7 @@ A CNN is formed by multiple layers that work together to transform raw pixel dat
 
 **1.- Input Layer:** This layer receives the raw image data, typically represented as a three-dimensional matrix of pixel intensity values corresponding to the image’s height, width, and color channels (RGB). The input layer does not perform any computation; it simply feeds the pixel values to the next layer.
 
-**2.- Convolutional Layers:** This is the core building block of a CNN. It applies small, learnable filters (called kernels) that slide over the input image to detect localized features such as edges, corners, or gradients. Each filter produces a feature map that highlights where specific patterns occur in the image. By stacking multiple convolutional layers, the network learns hierarchical featuresfrom simple edges in early layers to more complex structures or objects in deeper ones.
+**2.- Convolutional Layers:** This is the core building block of a CNN. It applies small, learnable filters (called kernels) that slide over the input image to detect localized features such as edges, corners, or gradients. Each filter produces a feature map that highlights where specific patterns occur in the image. By stacking multiple convolutional layers, the network learns hierarchical features from simple edges in early layers to more complex structures or objects in deeper ones.
 
 
 **3.- Activation Layers:** After each convolution operation, an activation function introduces non-linearity into the model, enabling it to learn complex patterns. The most common activation function is the Rectified Linear Unit (ReLU), which replaces all negative values with zero. This helps the CNN converge faster (i.e., find optimal parameters efficiently) and prevents the vanishing gradient problem, a common issue where gradients become too small for effective learning in deep networks.
@@ -58,6 +58,29 @@ A CNN is formed by multiple layers that work together to transform raw pixel dat
 
 
 **6.- Output Layer:** This is the final layer of the CNN that produces the prediction. For instance, in a multi-class classification task, the Softmax activation function is commonly used to convert the output into a probability distribution across all possible categories (e.g., cat = 0.85, dog = 0.10, car = 0.05).
+
+Let's see a visual representation of the process with the following image:
+<p align="center">
+  <img src="/images/elephant.png" alt="cnn_example">
+</p>
+
+**1.- Original Image:**
+We start with a colorful picture of an Elephant (size = 716 x 788px)
+
+**2.- Grayscale & Resize:**
+The image is simplified by removing color and resizing while keeping important structure.
+
+**3.- Convolution:**
+A filter scans the image and highlights edges and shapes, making contours more visible.
+
+**4.- Activation (ReLU):**
+Negative values are removed, keeping only strong feature responses.
+
+**5.- Pooling:**
+The feature map is downsampled, reducing size while retaining the most important information.
+
+This sequence shows how CNNs gradually extract and condense visual features before classification.
+
 
 ## Experimental Implementation: CNN Model for Handwritten Digit Recognition Using the MNIST Dataset
 To demonstrate how Convolutional Neural Networks operate in practice, we implemented a simple CNN model using the MNIST handwritten digits dataset. 

@@ -87,19 +87,6 @@ A dropout layer with a rate of 0.5 randomly “turns off” half of the neurons 
 
 **Output layer with Softmax**
 The final dense layer has 10 neurons with Softmax activation, producing a probability distribution over the 10 digit classes (0–9).
-
-
-### **Training Setup**
-
-The model was trained using the following setup:
-
-**Optimizer:** Adam, which adapts the learning rate during training.
-
-**Loss function:** Categorical cross-entropy, appropriate for multi-class classification with one-hot labels.
-
-**Metrics:** Accuracy on both the training and validation sets.
-
-**Training configuration:** 5 epochs, batch size of 128, with 10% of the training data held out as a validation set.
 ```python
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, Dropout
@@ -117,6 +104,19 @@ model = Sequential([
 ])
 
 ```
+
+### **Training Setup**
+
+The model was trained using the following setup:
+
+**Optimizer:** Adam, which adapts the learning rate during training.
+
+**Loss function:** Categorical cross-entropy, appropriate for multi-class classification with one-hot labels.
+
+**Metrics:** Accuracy on both the training and validation sets.
+
+**Training configuration:** 5 epochs, batch size of 128, with 10% of the training data held out as a validation set.
+
 After training, we calculated the model's accuracy and loss and displayed it
 <p align="center">
   <img src="/images/curves.PNG" alt="curves">
@@ -138,3 +138,7 @@ In total, the model correctly predicts 9,907 out of 10,000 test images, which co
 <p align="center">
   <img src="/images/output.PNG" alt="conf_matrix">
 </p>
+
+### Conclusion
+
+This project showed how Convolutional Neural Networks turn raw pixels into useful predictions, starting from simple operations like convolution, ReLU, and pooling, and ending with a full model that can recognize handwritten digits. After preprocessing the data and building a small but effective architecture, the model reached high accuracy on unseen test images, proving that these learned features are truly useful, not just memorized patterns. At the same time, the experiment highlighted that MNIST is a relatively simple problem, and that more complex, real world tasks would require deeper models, more data, and additional techniques. Overall, the project not only explains what CNNs are, it also demonstrates how data preprocessing, model design, and visualization come together in a real data science workflow, from understanding the method to evaluating its strengths and limitations.

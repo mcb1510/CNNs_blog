@@ -59,13 +59,14 @@ A CNN is formed by multiple layers that work together to transform raw pixel dat
 
 **6.- Output Layer:** This is the final layer of the CNN that produces the prediction. For instance, in a multi-class classification task, the Softmax activation function is commonly used to convert the output into a probability distribution across all possible categories (e.g., cat = 0.85, dog = 0.10, car = 0.05).
 
-Let's see a visual representation of the process with the following image:
+The following image illustrates how the CNN layers transform the input step by step:
+
 <p align="center">
   <img src="/images/elephant.png" alt="cnn_example">
 </p>
 
 **1.- Original Image:**
-We start with a colorful picture of an Elephant (size = 716 x 788px)
+We start with a colorful input image of an elephant (716 × 788 pixels).
 
 **2.- Grayscale & Resize:**
 The image is simplified by removing color and resizing while keeping important structure.
@@ -90,13 +91,14 @@ The goal of this experiment is to recognize handwritten digits automatically fro
 
 ### **MNIST**
 The dataset, MNIST, consists of  70,000 grayscale images of handwritten digits, with 60,000 for training and 10,000 for testing, each 28 × 28 pixels.
-Reshaping, the images were reshaped to 4D tensors with shape (samples, 28, 28, 1) to fit the Keras CNN layers, and normalized from [0, 255] to [0, 1], which helps gradients behave better during training. Labels were converted to one hot encoding so the network can output a probability for each digit. Here is a visualization of the training data set
+Reshaping, the images were reshaped to 4D tensors with shape (samples, 28, 28, 1) to fit the Keras CNN layers, and normalized from [0, 255] to [0, 1], which helps gradients behave better during training. Labels were converted to one-hot encoding so the network can output a probability for each digit. Here is a visualization of the training data set
 <p align="center">
   <img src="/images/dataset_preview.PNG" alt="dataset_preview">
 </p>
 
 ### **CNN Architecture**
-Then we built our Convolutional Neural Network. For a small project like this, we can achieve good results with a small model with the following structure: 
+Then we built our Convolutional Neural Network. For a small project like this, we can achieve good results with a compact model with the following structure: 
+
 <br>
 **Two convolution–pooling blocks**
 The first block uses a 3×3 convolution with 32 filters followed by 2×2 max pooling, and the second block uses a 3×3 convolution with 64 filters followed by another 2×2 max pooling.

@@ -100,7 +100,23 @@ The model was trained using the following setup:
 **Metrics:** Accuracy on both the training and validation sets.
 
 **Training configuration:** 5 epochs, batch size of 128, with 10% of the training data held out as a validation set.
+```python
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, Dropout
 
+# Define the CNN architecture
+model = Sequential([
+    Conv2D(32, (3, 3), activation='relu', input_shape=(28, 28, 1)),
+    MaxPooling2D((2, 2)),
+    Conv2D(64, (3, 3), activation='relu'),
+    MaxPooling2D((2, 2)),
+    Flatten(),
+    Dense(128, activation='relu'),
+    Dropout(0.5),
+    Dense(10, activation='softmax')
+])
+
+```
 After training, we calculated the model's accuracy and loss and displayed it
 <p align="center">
   <img src="/images/curves.PNG" alt="curves">
@@ -112,11 +128,13 @@ test_loss, test_acc = model.evaluate(x_test, y_test, verbose=0)
 print(f'Test Accuracy: {test_acc * 100:.2f}%')
 ```
 We obtained an excellent score of 99.07% Test Accuracy.
-Finally, we made predictions and plotted our confusion matrix
+To better understand which digits the model recognizes well and where it struggles, we computed a confusion matrix on the test set.
+
+In this matrix, each row corresponds to the true digit. Each column corresponds to the predicted digit. Values along the main diagonal represent correct classifications, while off-diagonal values represent mistakes.
 <p align="center">
   <img src="/images/confusion_matrix.PNG" alt="conf_matrix">
 </p>
-and just like tha, we successfully built a Convolutional Neural Network with 99.07% Accuracy! Here is a visual of some of the predictions
+In total, the model correctly predicts 9,907 out of 10,000 test images, which corresponds to our 99.07% test accuracy. This confirms that the CNN has learned highly effective feature representations for handwritten digit recognition. Here is a picture of the prediction output from our model
 <p align="center">
   <img src="/images/output.PNG" alt="conf_matrix">
 </p>
